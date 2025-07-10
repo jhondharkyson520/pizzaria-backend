@@ -2,16 +2,18 @@ import express, {Request, Response, NextFunction} from 'express';
 import 'express-async-errors';
 import cors from 'cors';
 import path from 'path';
-import {router} from './routes';
 import { userRouter } from './routes/user/user-routes';
 import { categoryRouter } from './routes/category/category-routes';
+import { productRouter } from './routes/product/product-routes';
+import { orderRouter } from './routes/order/order-routes';
 
 const app = express();
 app.use(express.json());
 app.use(cors());
-app.use(router);
 app.use('/users', userRouter);
 app.use('/category', categoryRouter);
+app.use('/product', productRouter);
+app.use('/order', orderRouter);
 app.use(
     '/files',
     express.static(path.resolve(__dirname, '..', 'tmp'))
