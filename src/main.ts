@@ -3,13 +3,15 @@ import 'express-async-errors';
 import cors from 'cors';
 import path from 'path';
 import {router} from './routes';
-import { userRoutes } from './routes/user/user-routes';
+import { userRouter } from './routes/user/user-routes';
+import { categoryRouter } from './routes/category/category-routes';
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(router);
-app.use('/users', userRoutes);
+app.use('/users', userRouter);
+app.use('/category', categoryRouter);
 app.use(
     '/files',
     express.static(path.resolve(__dirname, '..', 'tmp'))
