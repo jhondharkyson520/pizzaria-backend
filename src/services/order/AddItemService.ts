@@ -13,7 +13,7 @@ class AddItemService{
             data: {
                 order_id: order_id,
                 product_id: product_id,
-                amount
+                amount: amount
             }
         });
 

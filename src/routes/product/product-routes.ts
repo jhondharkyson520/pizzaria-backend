@@ -8,6 +8,6 @@ import { isAuthenticated } from '../../middlewares/isAuthenticated';
 const productRouter = Router();
 const upload = multer(uploadConfig.upload("./tmp"));
 productRouter.post('/create', isAuthenticated, upload.single('file'), new CreateProductController().handle);
-productRouter.get('/category', isAuthenticated, new ListByCategoryController().handle);
+productRouter.get('/list-by-category', isAuthenticated, new ListByCategoryController().handle);
 
 export {productRouter};
