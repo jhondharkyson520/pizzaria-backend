@@ -7,13 +7,8 @@ interface AuthRequest{
     password: string;
 }
 
-
-
-
 class AuthUserService{
     async execute({email, password}: AuthRequest){
-        
-        //verificar se o email existe
         const user = await prismaClient.user.findFirst({
             where:{
                 email: email
@@ -24,14 +19,12 @@ class AuthUserService{
             throw new Error("User/password incorrect")
         }
 
-        // preciso verificar se a senha que ele mandou está correta
         const passwordMatch = await compare(password, user.password);
 
         if(!passwordMatch){
             throw new Error("User/password incorrect")
         }
 
-        //se deu tyudo certo iremos gerar um token ao usuario
         const token = sign(
             {
                name: user.name,
@@ -51,9 +44,7 @@ class AuthUserService{
             email: user.email,
             token: token
         }
-        
-
     }
 }
 
-export { AuthUserService };
+export {AuthUserService};

@@ -3,6 +3,9 @@ import prismaClient from "../../prisma";
 import { UserRepository } from "./user-repository";
 
 export class PrismaUserRepository implements UserRepository {
+    me(user_id: string): Promise<User | null> {
+        throw new Error("Method not implemented.");
+    }
     
     async create(user: User): Promise<User> {
         return prismaClient.user.create({
@@ -13,14 +16,5 @@ export class PrismaUserRepository implements UserRepository {
                 password: user.password
             }
         });
-    }
-
-    async session(email: string, password: string): Promise<Partial<User>> {
-        return{
-            
-        }
-    }
-    async me(user_id: string): Promise<User[]> {
-        throw new Error("Method not implemented.");
     }
 }
