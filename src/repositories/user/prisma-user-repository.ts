@@ -3,8 +3,17 @@ import prismaClient from "../../prisma";
 import { UserRepository } from "./user-repository";
 
 export class PrismaUserRepository implements UserRepository {
-    me(user_id: string): Promise<User | null> {
-        throw new Error("Method not implemented.");
+    async me(user_id: string): Promise<Partial<User> | null> {
+        return prismaClient.user.findFirst({
+            where:{
+                id: user_id
+            },
+            select: {
+                id: true,
+                name: true,
+                email: true,        
+            }
+        });
     }
     
     async create(user: User): Promise<User> {

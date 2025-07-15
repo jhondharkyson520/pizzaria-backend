@@ -1,14 +1,13 @@
 import { Router } from 'express';
-import { AuthUserController } from '../../controllers/user/AuthUserController';
-import { CreateUserController } from '../../controllers/user/CreateUserController';
-import { DetailUserController } from '../../controllers/user/DetailUserController';
-import { isAuthenticated } from '../../middlewares/isAuthenticated';
 import { authenticateUserController } from '../../controllers/user/authenticate-user-controller';
+import { createUserController } from '../../controllers/user/create-user-controller';
+import { isAuthenticated } from '../../middlewares/isAuthenticated';
+import { detailUserController } from '../../controllers/user/detail-user-controller';
 
 const userRouter = Router();
-userRouter.post('/create', new CreateUserController().handle);
+userRouter.post('/create', createUserController);
 //userRouter.post('/session', new AuthUserController().handle);
 userRouter.post('/session', authenticateUserController);
-userRouter.get('/me', isAuthenticated, new DetailUserController().handle);
+userRouter.get('/me', isAuthenticated, detailUserController);
 
 export {userRouter};
