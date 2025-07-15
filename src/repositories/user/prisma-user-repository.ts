@@ -3,8 +3,11 @@ import prismaClient from "../../prisma";
 import { UserRepository } from "./user-repository";
 
 export class PrismaUserRepository implements UserRepository {
-    async me(user_id: string): Promise<Partial<User> | null> {
-        return prismaClient.user.findFirst({
+    async me(user_id: string): Promise<Partial<User>> {
+        if (!user_id) {
+            throw new Error("User ID is required");
+        }
+        return prismaClient.user.findUnique({
             where:{
                 id: user_id
             },

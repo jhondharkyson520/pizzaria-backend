@@ -25,9 +25,12 @@ export class AuthenticateUser {
         }
 
         const token = jwt.sign(
-            { id: user.id, email: user.email },
+            { email: user.email },
             process.env.JWT_SECRET as string,
-            { expiresIn: "1d" }
+            { 
+                subject: user.id,
+                expiresIn: "1d" 
+            }
         );
 
         return {user, token}
