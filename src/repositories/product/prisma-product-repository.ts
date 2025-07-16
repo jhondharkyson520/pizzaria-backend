@@ -14,5 +14,12 @@ export class PrismaProductRepository implements ProductRepository {
                 category_id: data.category_id,
             } as Prisma.ProductUncheckedCreateInput,
         });
-    }  
+    }
+    async listProductByCategory(category_id: string): Promise<Product[]> {
+        return prismaClient.product.findMany({
+            where: {
+                category_id: category_id
+            }
+        });
+    }
 }
