@@ -2,7 +2,7 @@ import { Category } from "../../entities/category";
 import prismaClient from "../../prisma";
 import { CategoryRepository } from "./category-repository";
 
-export class PrismaCategoryRepository implements CategoryRepository {    
+export class PrismaCategoryRepository implements CategoryRepository {
     async create(category: Category): Promise<Category> {
         return prismaClient.category.create({
             data: {
@@ -15,4 +15,13 @@ export class PrismaCategoryRepository implements CategoryRepository {
             }
         });
     }
+
+    async find(): Promise<Category[]> {
+        return prismaClient.category.findMany({
+            select: {
+                id: true,
+                name: true
+            }
+        });
+    }    
 }

@@ -13,7 +13,7 @@ export const createCategoryController = async (req: Request, res: Response): Pro
         const {category} =  await createCategory.execute(name);
 
         return res.status(201).json({
-            sucess: 'User created',
+            sucess: 'Category created',
             user: {id: category.id, name: category.name}
         });
     } catch(error) {
