@@ -3,22 +3,21 @@ import { PrismaUserRepository } from "../../repositories/user/prisma-user-reposi
 import { CreateUser } from "../../use-cases/user/create-user";
 import { PrismaOrderRepository } from "../../repositories/order/prisma-order-repository";
 import { CreateOrder } from "../../use-cases/order/create-oder";
+import { RemoveOrder } from "../../use-cases/order/remove-order";
 
 const orderRepository = new PrismaOrderRepository;
-const createOrder = new CreateOrder(orderRepository);
+const removeOrder = new RemoveOrder(orderRepository);
 
-export const createOrderController = async (req: Request, res: Response): Promise<Response> => {
+export const removeOrderController = async (req: Request, res: Response): Promise<Response> => {
     try {
-        const {table, status, draft, name} = req.body;
-        const order = await createOrder.execute({
-            table,
-            status,
-            draft,
-            name
-        });    
+        const {order_id} = req.query;
+        if (!order_id || typeof order_id !== 'string') {
+            return res.status(400).json({ error: 'order_id is required and must be a string' });
+        }
+        const order = await removeOrder.execute(order_id);    
 
         return res.status(201).json({
-            sucess: 'Order created',
+            sucess: 'Order removed',
             order: {order}
         });        
     } catch(error) {

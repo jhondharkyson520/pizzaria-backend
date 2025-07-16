@@ -6,8 +6,6 @@ import { userRouter } from './routes/user/user-routes';
 import { categoryRouter } from './routes/category/category-routes';
 import { productRouter } from './routes/product/product-routes';
 import { orderRouter } from './routes/order/order-routes';
-//import { productRouter } from './routes/product/product-routes';
-//import { orderRouter } from './routes/order/order-routes';
 
 const app = express();
 app.use(express.json());
