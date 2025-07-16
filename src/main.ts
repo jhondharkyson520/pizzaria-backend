@@ -5,6 +5,7 @@ import path from 'path';
 import { userRouter } from './routes/user/user-routes';
 import { categoryRouter } from './routes/category/category-routes';
 import { productRouter } from './routes/product/product-routes';
+import { orderRouter } from './routes/order/order-routes';
 //import { productRouter } from './routes/product/product-routes';
 //import { orderRouter } from './routes/order/order-routes';
 
@@ -14,7 +15,7 @@ app.use(cors());
 app.use('/users', userRouter);
 app.use('/category', categoryRouter);
 app.use('/product', productRouter);
-//app.use('/order', orderRouter);
+app.use('/order', orderRouter);
 app.use(
     '/files',
     express.static(path.resolve(__dirname, '..', 'tmp'))
