@@ -1,8 +1,9 @@
 import prismaClient from "../../prisma";
 import { OrderRepository } from "./order-repository";
 import { Order } from "../../entities/order";
+import { Item } from "@prisma/client";
 
-export class PrismaOrderRepository implements OrderRepository {    
+export class PrismaOrderRepository implements OrderRepository {     
     async create(data: Order): Promise<Order> {
         return prismaClient.order.create({
             data: {
@@ -21,4 +22,14 @@ export class PrismaOrderRepository implements OrderRepository {
             }
         });
     }
+
+    async addItem(order_id: string, product_id: string, amount: number): Promise<Item> {
+        return prismaClient.item.create({
+            data: {
+                order_id: order_id,
+                product_id: product_id,
+                amount
+            }
+        })
+    }   
 }
