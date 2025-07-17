@@ -3,7 +3,7 @@ import { OrderRepository } from "./order-repository";
 import { Order } from "../../entities/order";
 import { Item } from "../../entities/item";
 
-export class PrismaOrderRepository implements OrderRepository {           
+export class PrismaOrderRepository implements OrderRepository {    
     async create(data: Order): Promise<Order> {
         return prismaClient.order.create({
             data: {
@@ -50,5 +50,17 @@ export class PrismaOrderRepository implements OrderRepository {
                 draft: false
             }
         });
-    } 
+    }
+
+    async listAllOrders(): Promise<Order[]> {
+        return prismaClient.order.findMany({
+            where: {
+                draft: false,
+                status: false
+            },
+            orderBy: {
+                created_at: 'desc'
+            }
+        });
+    }
 }
