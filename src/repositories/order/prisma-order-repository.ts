@@ -3,9 +3,9 @@ import { OrderRepository } from "./order-repository";
 import { Order } from "../../entities/order";
 import { Item } from "../../entities/item";
 
-export class PrismaOrderRepository implements OrderRepository {
+export class PrismaOrderRepository implements OrderRepository {    
     async create(data: Order): Promise<Order> {
-        return prismaClient.order.create({
+        return await prismaClient.order.create({
             data: {
                 table: data.table,
                 status: data.status,
@@ -16,7 +16,7 @@ export class PrismaOrderRepository implements OrderRepository {
     }
 
     async remove(order_id: string): Promise<Partial<Order>> {
-        return prismaClient.order.delete({
+        return await prismaClient.order.delete({
             where: {
                 id: order_id
             }
@@ -24,7 +24,7 @@ export class PrismaOrderRepository implements OrderRepository {
     }
 
     async addItem(order_id: string, product_id: string, amount: number): Promise<Item> {
-        return prismaClient.item.create({
+        return await prismaClient.item.create({
             data: {
                 order_id: order_id,
                 product_id: product_id,
@@ -34,7 +34,7 @@ export class PrismaOrderRepository implements OrderRepository {
     }
 
     async removeItem(item_id: string): Promise<Item> {
-        return prismaClient.item.delete({
+        return await prismaClient.item.delete({
             where: {
                 id: item_id
             }
@@ -42,7 +42,7 @@ export class PrismaOrderRepository implements OrderRepository {
     }
     
     async send(order_id: string): Promise<Order> {
-        return prismaClient.order.update({
+        return await prismaClient.order.update({
             where: {
                 id: order_id
             },
@@ -53,7 +53,7 @@ export class PrismaOrderRepository implements OrderRepository {
     }
 
     async listAllOrders(): Promise<Order[]> {
-        return prismaClient.order.findMany({
+        return await prismaClient.order.findMany({
             where: {
                 draft: false,
                 status: false
@@ -65,7 +65,7 @@ export class PrismaOrderRepository implements OrderRepository {
     }
 
     async detailOrder(order_id: string): Promise<Item[]> {
-        return prismaClient.item.findMany({
+        return await prismaClient.item.findMany({
             where: {
                 order_id: order_id
             },
@@ -74,5 +74,16 @@ export class PrismaOrderRepository implements OrderRepository {
                 order: true
             }
         });
-    } 
+    }
+
+    async finish(order_id: string): Promise<Order> {
+        return await prismaClient.order.update({
+            where: {
+                id: order_id
+            },
+            data: {
+                status: true
+            }
+        });
+    }
 }

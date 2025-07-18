@@ -9,4 +9,5 @@ export interface OrderRepository {
     send(order_id: string): Promise<Order>;
     listAllOrders(): Promise<Order[]>;
     detailOrder(order_id: string): Promise<Item[]>;
+    finish(order_id: string): Promise<Order>;
 }
